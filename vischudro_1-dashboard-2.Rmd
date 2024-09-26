@@ -1,0 +1,73 @@
+---
+title: "Дэшборд EDA2"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(dplyr)
+library(ggplot2)
+
+marketing = read.csv("~/shared/minor2_2023/1-Intro/hw2/marketing_campaign.csv")
+# загрузка данных, предобработка 
+
+```
+
+Column {data-width=550}
+-----------------------------------------------------------------------
+
+### Сравнение поведения потребителей в кампании разных периодов
+
+```{r message = FALSE, warning=FALSE} 
+# самый важный график или таблица
+library(ggplot2)
+library(gridExtra)
+marketing_clear = marketing[complete.cases(marketing$AcceptedCmp), ]
+marketing_clear$AcceptedCmp = as.factor(marketing_clear$AcceptedCmp)
+marketing_clear$Response = as.factor(marketing_clear$Response)
+plot1 <- ggplot(marketing_clear, aes(x = Response, label=..count..), label = Response) +
+  geom_bar(fill = "skyblue") +
+  ylab("Количество") +
+  xlab("Кампания текущего периода") +
+  geom_text(stat='count', aes(label=..count..), vjust=-0.5)
+plot2 <- ggplot(marketing_clear, aes(x = AcceptedCmp, label=..count..), label = AcceptedCmp) +
+  geom_bar(fill = "skyblue") +
+  ylab("Количество") +
+  xlab("Кампания прошлого периода") +
+  geom_text(stat='count', aes(label=..count..), vjust=-0.5)
+grid.arrange(plot1, plot2, ncol=2)
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### наиболее яркая характеристика поведения потребителей в будущем
+
+```{r message = FALSE, warning=FALSE} 
+valueBox("отклик на предыдущие кампании")
+```
+
+### Дерево решений
+
+```{r}
+# график или таблица
+library(rpart)
+library(rpart.plot)
+library(dplyr)
+set.seed(1234)
+marketing$Response = as.factor(marketing$Response)
+train = sample_frac(marketing, 0.75)
+tree <- rpart(Response ~ AcceptedCmp + Recency + NumStorePurchases, method = "class", data = train)
+prp(tree, extra = 106)
+
+```
+
+### фактор, не влияющий на поступление жалобы от клиента
+
+```{r}
+valueBox("доход клиента")
+```
