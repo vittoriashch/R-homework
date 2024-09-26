@@ -1,0 +1,81 @@
+---
+title: "Дэшборд EDA"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(dplyr)
+library(ggplot2)
+
+source("~/shared/minor2_2023/1-Intro/hw1/hw1_data.R")
+
+airline = hw1_get_data(df_name = "airline")
+airport = hw1_get_data(df_name = "airport")
+lounge = hw1_get_data(df_name = "lounge")
+seat = hw1_get_data(df_name = "seat")
+library(lubridate)
+airline$date = wday(airline$date, label = TRUE)
+# загрузка данных, предобработка 
+
+```
+
+Column {data-width=550}
+-----------------------------------------------------------------------
+
+### Average ratings by day of the week
+
+```{r}
+# самый важный график или таблица
+library(tidyr)
+df = drop_na(airline, overall_rating, date)
+df1 = filter(df, (date == 'Sun' | date == 'Sat'))
+df2 = filter(df, (date == 'Fri' | date == 'Mon' | date == 'Tue'| date == 'Wed'| date == 'Thu'))
+mean_end = mean(df1$overall_rating)
+mean_work = mean(df2$overall_rating)
+df = group_by(df, date) %>%
+  summarize(avg_rate = mean(overall_rating))
+library(ggplot2)
+ggplot(df, aes(x = date, y = avg_rate, fill = date)) +
+  geom_bar(stat = "identity") +
+  labs( x = "Day of the week", y = "Average rating")
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### наиболее частая оценка лаундж-зон с упоминанием чистоты помещений
+
+```{r}
+valueBox("3")
+```
+
+### Airplanes per country
+
+```{r}
+# график или таблица
+data_inner = inner_join(seat, airport, by = "author")
+library(stringr)
+data_inner$aircraft = str_to_lower(data_inner$aircraft)
+data_inner = filter(data_inner, (aircraft != 'b777-200lr' & aircraft != 'b747-400' & aircraft != 'a380' ))
+data_inner$aircraft = gsub("airbus\\s\\w+", 'airbus', data_inner$aircraft)
+data_inner$aircraft = gsub("airbus(-\\w+)?", 'airbus', data_inner$aircraft)
+data_inner$aircraft = gsub("boeing\\s\\d{3}-\\d{3}", 'boeing', data_inner$aircraft)
+data_inner$aircraft = gsub("boeing\\s\\d{3}-\\wer", 'boeing', data_inner$aircraft, ignore.case = TRUE)
+data_inner$aircraft = gsub("boeinger", 'boeing', data_inner$aircraft, ignore.case = TRUE)
+data_inner = data_inner %>% group_by(airport_name, aircraft) %>% summarize(count = n()) %>% arrange(desc(count))
+data_inner$country <- c("Canada", "South Korea", "Malaysia", 'UAE', 'USA', 'Bahrain', 'Brunei', 'China', 'UK', 'Burundi', 'Bangladesh', 'UAE', 'Ireland', 'China', 'Saudi Arabia', 'Ukraine', 'Ukraine', 'India', 'UK', 'USA', 'Jamaica', 'USA', 'France', 'Congo', 'Canada', 'Austria')
+data_inner = data_inner %>% group_by(country, aircraft) %>% summarize(count = n()) %>% arrange(desc(count))
+ggplot(data_inner, aes(x = country, y = count, fill = aircraft)) +
+  geom_bar(stat = "identity") +
+  labs( x = "Country", y = "Airplanes total") +   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + scale_fill_discrete(name = "Aircraft type")
+```
+
+### разница между средними оценками работы аэропортов в выходные и рабочие дни
+
+```{r}
+valueBox("0,06")
+```
