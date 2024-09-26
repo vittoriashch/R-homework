@@ -18,5 +18,4 @@ This project explores airline transportation data with a focus on exploratory da
 Significant fluctuations in passenger traffic during specific seasons.
 Correlation between passenger numbers and external factors like fuel prices.
 Key routes and their traffic patterns.
-
-### [Dashboard](https://github.com/vittoriashch/R-homework/blob/main/hw1_dashboard.Rmd)
+* ### [Dashboard](https://github.com/vittoriashch/R-homework/blob/main/hw1_dashboard.Rmd)
