@@ -64,3 +64,58 @@ The dataset used for this analysis contains information on various customer inte
 ### Conclusion
 The analysis highlights key factors influencing customer engagement and behavior in response to marketing campaigns. These insights can be used by businesses to design more effective, targeted campaigns, improving customer retention and overall campaign success.
 
+
+
+## [Company Communication Network Analysis](https://github.com/vittoriashch/R-homework/blob/main/hw3.Rmd)
+
+### Overview
+This project focuses on analyzing the email communication patterns between employees of a company, using a subset of the Enron email dataset. The primary objectives are to explore how employees interact through email, identify key players within the communication network, and provide insights into the structure and dynamics of the company's internal communication.
+
+### Objectives
+Network Structure Analysis: Examine the email exchange network between employees during March 2001.
+Key Employee Identification: Identify employees who are central in the network and play a crucial role in communication flow.
+Communication Patterns: Understand the types of connections (direct and indirect) within the company and visualize the network to spot patterns of engagement.
+
+### Key Research Questions
+* Who are the key communicators?
+Identify employees with the highest number of connections (degree centrality) and those who serve as bridges in communication (betweenness centrality).
+
+* What are the dominant communication paths?
+Explore the most common routes for information flow and the strongest connections within the email network.
+
+* How structured is the network?
+Assess the overall structure of the network to determine whether it is hierarchical, centralized, or decentralized.
+
+### Data
+The dataset used in this analysis includes information about email exchanges between employees of Enron. Each data point represents a directed edge from one employee to another.
+
+* Employee Data: Email addresses, names, and roles.
+* Email Metadata: Timestamps, recipient types (to, cc, bcc), and topic classifications.
+* Communication Network: Vertices represent employees, and edges represent email exchanges between them.
+  
+### Methods
+* Network Construction: A directed graph is constructed where nodes are employees and edges represent emails sent between them.
+* Data Filtering: Emails outside the target time frame (March 2001) and self-loops (emails sent to oneself) are removed.
+  
+### Network Analysis:
+* Degree Centrality: Measures the number of connections an employee has.
+* Betweenness Centrality: Identifies employees who act as communication hubs, connecting different parts of the network.
+* Simplification: Removes multiple edges and isolates for clearer analysis.
+  
+### Tools Used
+* R: Primary programming language for data analysis and network modeling.
+* igraph: For building and analyzing network graphs.
+* dplyr: For data manipulation and cleaning.
+* lubridate: For handling dates and times in the email dataset.
+
+### Results
+* Key Communicators: Several employees were identified as central figures in the communication network, responsible for managing critical email exchanges across the company.
+* Communication Structure: The network revealed a moderately centralized structure, with a few key individuals handling a majority of email traffic, while most employees had fewer, more direct connections.
+* Information Flow: Certain communication paths were more frequently used, showing that some teams or departments had stronger internal communication, while others relied more on key intermediaries.
+
+### Visualization
+The email network was visualized using a graph, with employees as nodes and email connections as edges. The size of the nodes indicates their centrality, and different colors were used to represent various teams or departments.
+
+### Conclusion
+The analysis provides valuable insights into the internal communication patterns within the company. Identifying key employees and understanding how information flows can help in improving communication strategies, ensuring more efficient information dissemination, and recognizing potential bottlenecks in the network.
+
