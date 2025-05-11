@@ -26,13 +26,13 @@ Key routes and their traffic patterns.
 This project focuses on analyzing customer behavior in response to various marketing campaigns. Using a dataset from a marketing campaign, the primary objectives are to explore customer engagement patterns, identify factors that influence campaign success, and provide insights into customer retention and segmentation strategies.
 
 ### Objectives
-Customer Engagement Analysis: Investigate whether customers who responded to previous campaigns are more likely to respond to future ones.
-Socioeconomic Influence: Analyze the impact of household income and wealth on the likelihood of submitting complaints.
-Consumer Behavior Prediction: Build a decision tree model to predict customer responses based on past behavior and economic factors.
+* Customer Engagement Analysis: Investigate whether customers who responded to previous campaigns are more likely to respond to future ones.
+* Socioeconomic Influence: Analyze the impact of household income and wealth on the likelihood of submitting complaints.
+* Consumer Behavior Prediction: Build a decision tree model to predict customer responses based on past behavior and economic factors.
 ### Key Research Questions
 * Response to Campaigns:
 
-Do customers who responded to earlier campaigns tend to respond to future ones?
+* Do customers who responded to earlier campaigns tend to respond to future ones?
 Using Chi-squared tests, this question is explored to find correlations between previous responses and future behavior.
 Complaints and Income:
 
